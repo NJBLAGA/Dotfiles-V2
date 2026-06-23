@@ -34,6 +34,10 @@
   Alt + Up            Previous session
   Alt + Down          Next session
 ─────────────────────────────────────────────
+  CLI
+  tmux new -s [name]  New named session
+  pkill -f tmux       Kill all tmux sessions
+─────────────────────────────────────────────
   Copy mode
   Prefix + [          Enter copy mode
   v                   Begin selection
