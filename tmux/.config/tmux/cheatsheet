@@ -1,0 +1,44 @@
+  Prefix              Ctrl + Space
+─────────────────────────────────────────────
+  General
+  Prefix + /          Cheat sheet (this!)
+  Prefix + R          Reload config
+  Prefix + I          Install plugins
+─────────────────────────────────────────────
+  Windows
+  Prefix + c          New window
+  Prefix + x          Close window
+  Prefix + w          Window list
+  Prefix + r          Rename window
+  Alt + 1-9           Jump to window by number
+─────────────────────────────────────────────
+  Panes
+  Prefix + a          Split vertical (top/bottom)
+  Prefix + s          Split horizontal (left/right)
+  Prefix + h          Move left
+  Prefix + j          Move down
+  Prefix + k          Move up
+  Prefix + l          Move right
+  Prefix + H          Resize left
+  Prefix + J          Resize down
+  Prefix + K          Resize up
+  Prefix + L          Resize right
+  Prefix + m          Zoom/maximize toggle
+─────────────────────────────────────────────
+  Sessions
+  Prefix + o          SessionX picker
+  Prefix + C          New session
+  Prefix + K          Kill session
+  Prefix + P          Previous session
+  Prefix + N          Next session
+  Alt + Up            Previous session
+  Alt + Down          Next session
+─────────────────────────────────────────────
+  Copy mode
+  Prefix + [          Enter copy mode
+  v                   Begin selection
+  y                   Copy selection
+─────────────────────────────────────────────
+  Persist
+  Prefix + Ctrl+s     Save session (resurrect)
+  Prefix + Ctrl+r     Restore session (resurrect)
