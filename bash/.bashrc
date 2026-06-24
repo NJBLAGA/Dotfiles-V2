@@ -124,6 +124,20 @@ bind -x '"\e ":fzf_files_nvim'
 # Alt + h → history search
 bind -x '"\eh":fzf_history_confirm'
 
+# Alt + n → nordvpn menu
+nordvpn_menu() {
+  bash ~/.config/bash/nordvpn-menu
+  if [[ -f /tmp/.nordvpn_interactive ]]; then
+    READLINE_LINE=$(cat /tmp/.nordvpn_interactive)
+    READLINE_POINT=${#READLINE_LINE}
+    rm -f /tmp/.nordvpn_interactive
+  else
+    READLINE_LINE=""
+    READLINE_POINT=0
+  fi
+}
+bind -x '"\en":nordvpn_menu'
+
 # Alt + / → bash cheatsheet
 bash_cheatsheet() {
   cat ~/.config/bash/cheatsheet | fzf --no-sort --reverse --prompt='Search: ' --header='  Bash Keybindings & Aliases' --color='header:blue,prompt:blue'

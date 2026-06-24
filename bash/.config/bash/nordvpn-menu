@@ -1,0 +1,152 @@
+#!/usr/bin/env bash
+
+DEFERRED="/tmp/.nordvpn_interactive"
+FZF="fzf --reverse --color=header:blue,prompt:blue"
+
+# For state-changing commands: show output then exit the script
+run() {
+  printf '\n' > /dev/tty
+  nordvpn "$@" 2>&1 > /dev/tty
+  printf '\n' > /dev/tty
+  exit 0
+}
+
+# For info commands: show output in fzf viewer, press Enter/Esc to go back
+show() {
+  nordvpn "$@" 2>&1 | $FZF --disabled --no-sort --no-info \
+    --prompt='' --header="nordvpn $*  (Enter or Esc to go back)" \
+    --bind='enter:accept,esc:accept'
+}
+
+defer() {
+  echo "nordvpn $*" > "$DEFERRED"
+}
+
+menu_login() {
+  local tmpout url
+  tmpout=$(mktemp)
+
+  # Run login, show output live on terminal, capture it for URL extraction
+  nordvpn login 2>&1 | tee "$tmpout" > /dev/tty
+
+  # Open URL in browser if nordvpn didn't auto-open it
+  url=$(grep -o 'https://[^ ]*' "$tmpout" | head -1)
+  [[ -n "$url" ]] && xdg-open "$url" 2>/dev/null &
+
+  rm -f "$tmpout"
+
+  # nordvpn login blocks until the browser callback completes — show account after
+  show account
+}
+
+menu_set() {
+  while true; do
+    local opt val
+    opt=$(printf '%s\n' \
+      "autoconnect" \
+      "threatprotectionlite" \
+      "dns" \
+      "firewall" \
+      "killswitch" \
+      "notify" \
+      "technology" \
+      "analytics" \
+      "lan-discovery" \
+      "meshnet" \
+      "post-quantum" \
+      "routing" \
+      "tray" \
+      "virtual-location" \
+      "defaults" \
+      | $FZF --prompt='set > ' --header='NordVPN › Set  (Esc to go back)') || return
+
+    case "$opt" in
+      dns)
+        printf "Enter DNS server(s): " > /dev/tty
+        read -r val < /dev/tty
+        [[ -z "$val" ]] && continue
+        show set dns $val
+        ;;
+      technology)
+        val=$(printf 'nordlynx\nopenvpn\n' \
+          | $FZF --prompt='technology > ' --header='NordVPN › Set › Technology  (Esc to go back)') || continue
+        show set technology "$val"
+        ;;
+      defaults)
+        show set defaults
+        ;;
+      *)
+        val=$(printf 'enabled\ndisabled\n' \
+          | $FZF --prompt="$opt > " --header="NordVPN › Set › $opt  (Esc to go back)") || continue
+        show set "$opt" "$val"
+        ;;
+    esac
+  done
+}
+
+countries_list() {
+  nordvpn countries 2>&1 \
+    | tr -d '\r' \
+    | sed 's/\x1b\[[0-9;]*m//g' \
+    | tr -s '[:space:]' '\n' \
+    | grep -E '^[A-Za-z][A-Za-z_]+$' \
+    | sed 's/_/ /g' \
+    | sort
+}
+
+# nordvpn expects underscores — convert display name back
+to_nordvpn_arg() { echo "$1" | sed 's/ /_/g'; }
+
+menu_connect() {
+  while true; do
+    local display arg
+    display=$(countries_list \
+      | $FZF -i --prompt='country > ' --header='NordVPN › Connect  (Esc to go back)') || return
+    arg=$(to_nordvpn_arg "$display")
+    run connect "$arg"
+  done
+}
+
+menu_cities() {
+  while true; do
+    local display arg
+    display=$(countries_list \
+      | $FZF -i --prompt='country > ' --header='NordVPN › Cities  (Esc to go back)') || return
+    arg=$(to_nordvpn_arg "$display")
+    show cities "$arg"
+  done
+}
+
+main() {
+  while true; do
+    local cmd
+    cmd=$(printf '%s\n' \
+      "connect" \
+      "disconnect" \
+      "status" \
+      "account" \
+      "settings" \
+      "set" \
+      "countries" \
+      "cities" \
+      "groups" \
+      "login" \
+      "logout" \
+      "rate" \
+      "register" \
+      "version" \
+      | $FZF --prompt='nordvpn > ' --header='NordVPN  (Esc to exit)') || return
+
+    case "$cmd" in
+      connect)                     menu_connect ;;
+      disconnect)                  run disconnect ;;
+      cities)                      menu_cities ;;
+      set)                         menu_set ;;
+      login)                       menu_login ;;
+      logout|rate|register)        defer "$cmd"; return ;;
+      *)                           show "$cmd" ;;
+    esac
+  done
+}
+
+main
