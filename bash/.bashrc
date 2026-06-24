@@ -153,3 +153,11 @@ bash_cheatsheet() {
   READLINE_POINT=0
 }
 bind -x '"\e/":bash_cheatsheet'
+
+# Alt + z → keyboard layout viewer
+keyboard_layout() {
+  bat --style=plain --paging=always ~/.config/bash/keyboard-layout
+  READLINE_LINE=""
+  READLINE_POINT=0
+}
+bind -x '"\ez":keyboard_layout'
