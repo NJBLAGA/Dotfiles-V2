@@ -138,6 +138,14 @@ nordvpn_menu() {
 }
 bind -x '"\en":nordvpn_menu'
 
+# Alt + g → git cheatsheet
+git_cheatsheet() {
+  cat ~/.config/bash/git-cheatsheet | fzf --no-sort --reverse --prompt='Search: ' --header='  Git Reference' --color='header:blue,prompt:blue'
+  READLINE_LINE=""
+  READLINE_POINT=0
+}
+bind -x '"\eg":git_cheatsheet'
+
 # Alt + / → bash cheatsheet
 bash_cheatsheet() {
   cat ~/.config/bash/cheatsheet | fzf --no-sort --reverse --prompt='Search: ' --header='  Bash Keybindings & Aliases' --color='header:blue,prompt:blue'
