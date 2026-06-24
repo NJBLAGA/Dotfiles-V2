@@ -1,0 +1,149 @@
+─────────────────────────────────────────────
+  Setup
+  git config --global user.name "[name]"     Set global username
+  git config --global user.email "[email]"   Set global email
+  git config --global color.ui auto          Enable colored output
+  git config --list                          Show all config
+─────────────────────────────────────────────
+  Init & Clone
+  git init                                   Init repo in current dir
+  git init [dir]                             Init repo in new dir
+  git clone [url]                            Clone remote repo
+  git clone [url] [dir]                      Clone into named dir
+─────────────────────────────────────────────
+  Stage & Snapshot
+  git status                                 Show working tree status
+  git add [file]                             Stage file
+  git add .                                  Stage all changes
+  git reset [file]                           Unstage file, keep changes
+  git diff                                   Diff of unstaged changes
+  git diff --staged                          Diff of staged changes
+  git commit -m "[msg]"                      Commit staged changes
+  git commit -am "[msg]"                     Stage tracked + commit
+  git commit --amend                         Edit last commit message/content
+─────────────────────────────────────────────
+  Branch & Merge
+  git branch                                 List local branches
+  git branch -a                              List all branches
+  git branch [name]                          Create branch
+  git branch -d [name]                       Delete merged branch
+  git branch -D [name]                       Force delete branch
+  git checkout [branch]                      Switch branch
+  git checkout -b [branch]                   Create and switch
+  git switch [branch]                        Switch branch (modern)
+  git switch -c [branch]                     Create and switch (modern)
+  git merge [branch]                         Merge branch into current
+  git merge --no-ff [branch]                 Merge and always create commit
+  git cherry-pick [sha]                      Apply single commit to current branch
+─────────────────────────────────────────────
+  Rebase
+  git rebase [branch]                        Move current branch commits
+                                             on top of [branch]. Rewrites
+                                             history — do not use on shared
+                                             branches.
+
+  git rebase -i HEAD~[n]                     Interactive rebase: rewrite,
+                                             squash, reorder, or drop the
+                                             last n commits. Opens editor
+                                             with pick/squash/reword/drop.
+
+  git rebase --onto [newbase] [old] [branch] Move [branch] commits that are
+                                             not in [old] onto [newbase].
+                                             Useful for rebasing a slice.
+
+  git rebase --continue                      After resolving a conflict,
+                                             resume the rebase.
+
+  git rebase --skip                          Skip the current conflicting
+                                             commit and continue.
+
+  git rebase --abort                         Cancel rebase, restore original
+                                             branch state.
+
+  git pull --rebase                          Fetch and rebase instead of
+                                             merge — keeps history linear.
+─────────────────────────────────────────────
+  Inspect & Log
+  git log                                    Show commit log
+  git log --oneline --graph --all            Visual branch graph
+  git log -p [file]                          Log with patch for file
+  git log [branchB]..[branchA]              Commits in A not in B
+  git log --follow [file]                    Log including renames
+  git diff [branchB]...[branchA]            Diff between branches
+  git show [sha]                             Show commit details
+  git blame [file]                           Show who changed each line
+─────────────────────────────────────────────
+  Reflog
+  git reflog                                 Show every HEAD movement ever
+                                             recorded — commits, checkouts,
+                                             resets, rebases. Entries expire
+                                             after 90 days by default.
+
+  git reflog show [branch]                   Reflog for a specific branch
+                                             rather than HEAD.
+
+  git checkout HEAD@{n}                      Check out HEAD as it was n
+                                             moves ago (detached HEAD).
+
+  git reset --hard HEAD@{n}                  Restore HEAD to a past reflog
+                                             position. Use this to undo a
+                                             bad reset or rebase.
+
+  git branch [name] HEAD@{n}                 Create a new branch pointing
+                                             at a past reflog entry —
+                                             recovers "lost" commits.
+
+  git reflog expire --expire=now --all       Manually expire all reflog
+  git gc --prune=now                         entries and prune loose objects.
+                                             Permanent — do not run unless
+                                             you mean it.
+─────────────────────────────────────────────
+  Tracking Path Changes
+  git rm [file]                              Remove file and stage
+  git mv [src] [dst]                         Move/rename and stage
+  git log --stat -M                          Log with move detection
+─────────────────────────────────────────────
+  Ignore
+  .gitignore                                 Per-repo ignore patterns
+  git config --global core.excludesfile [f]  Global ignore file
+  git rm --cached [file]                     Untrack without deleting
+─────────────────────────────────────────────
+  Stash
+  git stash                                  Stash working changes
+  git stash push -m "[msg]"                  Stash with message
+  git stash list                             List stashes
+  git stash pop                              Apply and drop top stash
+  git stash apply stash@{n}                  Apply stash, keep it
+  git stash drop stash@{n}                   Drop a stash
+  git stash clear                            Drop all stashes
+─────────────────────────────────────────────
+  Share & Update
+  git remote -v                              List remotes
+  git remote add [alias] [url]               Add remote
+  git remote remove [alias]                  Remove remote
+  git fetch [remote]                         Fetch all branches
+  git pull                                   Fetch and merge
+  git pull --rebase                          Fetch and rebase
+  git push [remote] [branch]                 Push branch
+  git push -u origin [branch]               Push and set upstream
+  git push --force-with-lease               Safe force push
+─────────────────────────────────────────────
+  Rewrite History
+  git reset HEAD~1                           Undo last commit, keep changes
+  git reset --hard HEAD~1                    Undo last commit, discard all
+  git reset --hard [sha]                     Reset working tree to commit
+  git revert [sha]                           New commit that undoes sha
+  git clean -fd                              Remove untracked files and dirs
+─────────────────────────────────────────────
+  Tags
+  git tag                                    List tags
+  git tag [name]                             Lightweight tag at HEAD
+  git tag -a [name] -m "[msg]"              Annotated tag with message
+  git push origin [tag]                      Push single tag
+  git push origin --tags                     Push all tags
+─────────────────────────────────────────────
+  Worktree
+  git worktree add [path] [branch]           Check out branch in new dir
+  git worktree list                          List worktrees
+  git worktree remove [path]                 Remove worktree
+─────────────────────────────────────────────
