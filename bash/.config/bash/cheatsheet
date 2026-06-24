@@ -1,0 +1,64 @@
+─────────────────────────────────────────────
+  Cheatsheet
+  Alt + /          Cheat sheet (this!)
+─────────────────────────────────────────────
+  Terminal Navigation
+  Ctrl + a         Move to start of line
+  Ctrl + e         Move to end of line
+  Alt + b          Move back one word
+  Alt + f          Move forward one word
+  Ctrl + f         Move forward one character
+  Ctrl + b         Move backward one character
+─────────────────────────────────────────────
+  Editing
+  Ctrl + w         Delete word before cursor
+  Alt + d          Delete word after cursor
+  Ctrl + k         Delete from cursor to end
+  Ctrl + u         Delete from cursor to start
+  Ctrl + y         Paste (yank) last deleted
+  Ctrl + _         Undo
+  Ctrl + l         Clear screen
+─────────────────────────────────────────────
+  Vi mode (normal)
+  Esc              Enter normal mode
+  i / a            Insert / append
+  I / A            Insert at start / end of line
+  0 / $            Start / end of line
+  w / b / e        Word forward / backward / end
+  dd / D           Delete line / to end
+  cc / C           Change line / to end
+  u                Undo
+  k / j            Previous / next history
+  / + n / N        Search history, next / prev
+─────────────────────────────────────────────
+  File system
+  Alt + Space      File finder → open in nvim
+  Tab              Cycle completions forward
+  Shift + Tab      Cycle completions backward
+  ls               eza -lh (icons, dirs first)
+  lsa              ls -a (show hidden)
+  lt               eza tree (level 2, git)
+  lta              lt -a (show hidden)
+  ff               fzf file finder with preview
+  eff              $EDITOR "$(ff)"
+  open             Open file/dir in Nautilus
+─────────────────────────────────────────────
+  History
+  Alt + h          History search with confirm
+  Ctrl + r         Reverse history search
+  Ctrl + p         Previous command
+  Ctrl + n         Next command
+  Up / Down        History search by prefix
+─────────────────────────────────────────────
+  Tools
+  n                nvim (. if no args)
+  t                tmux attach || new -s Work
+  c                opencode
+  cx               claude (bypass permissions)
+  d                docker
+  r                rails
+  g                git
+  gcm              git commit -m
+  gcam             git commit -a -m
+  gcad             git commit -a --amend
+─────────────────────────────────────────────

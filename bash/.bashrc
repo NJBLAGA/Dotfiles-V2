@@ -119,7 +119,15 @@ fzf_history_confirm() {
 # =========================
 
 # Alt + Space → file search
-bind -x '"\e ":__fzf_files_bind'
+bind -x '"\e ":fzf_files_nvim'
 
-# Alt + f → history search
-bind -x '"\ef":__fzf_history_bind'
+# Alt + h → history search
+bind -x '"\eh":fzf_history_confirm'
+
+# Alt + / → bash cheatsheet
+bash_cheatsheet() {
+  cat ~/.config/bash/cheatsheet | fzf --no-sort --reverse --prompt='Search: ' --header='  Bash Keybindings & Aliases' --color='header:blue,prompt:blue'
+  READLINE_LINE=""
+  READLINE_POINT=0
+}
+bind -x '"\e/":bash_cheatsheet'
